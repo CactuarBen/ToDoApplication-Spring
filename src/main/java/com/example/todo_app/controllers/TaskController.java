@@ -2,6 +2,8 @@ package com.example.todo_app.controllers;
 
 import com.example.todo_app.models.Task;
 import com.example.todo_app.services.TaskService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name = "Task Management", description = "Operations related to tasks")
 @RestController
 @RequestMapping("/tasks") // Base path for all task-related endpoints
 public class TaskController {
@@ -24,12 +27,14 @@ public class TaskController {
         return service.getAllTasks();
     }
 
+    @Operation(summary = "Get all tasks", description = "Fetches all tasks in the system")
     @GetMapping("/{id}") // Base single-id get to show one task
     public ResponseEntity<Task> getTaskById(@PathVariable int id) {
         Task task = service.getTaskById(id);
         return (task != null) ? new ResponseEntity<>(task, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @Operation(summary = "Create a new task", description = "Adds a new task to the database")
     @PostMapping // Base post that posts the JSON with information
     public Task createTask(@Valid @RequestBody Task task) {
         return service.addTask(task);
@@ -58,3 +63,5 @@ public class TaskController {
         service.deleteTask(id);
     }
 }
+
+// Can now be accessed at http://localhost:8080/swagger-ui/index.html
