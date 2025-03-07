@@ -1,6 +1,8 @@
 package com.example.todo_app.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
+
 import java.time.LocalDate;
 
 @Entity
@@ -9,9 +11,20 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; // primary key for the database
+
+    @NotBlank(message = "Task name cannot be empty")
+    @Size(min = 3, max = 50, message = "Task name must be between 3 and 50 characters")
     private String taskName;
+
+    @NotBlank(message = "Task description cannot be empty")
+    @Size(max = 255, message = "Description must not exceed 255 characters")
     private String taskDescription;
+
+    @NotBlank(message = "Task status cannot be empty")
     private String taskStatus;
+
+    @Min(value = 1, message = "Priority must be at least 1")
+    @Max(value = 5, message = "Priority cannot be more than 5")
     private int taskPriority;
     private String taskDate;
 

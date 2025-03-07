@@ -2,6 +2,7 @@ package com.example.todo_app.controllers;
 
 import com.example.todo_app.models.Task;
 import com.example.todo_app.services.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,12 +31,12 @@ public class TaskController {
     }
 
     @PostMapping // Base post that posts the JSON with information
-    public Task createTask(@RequestBody Task task) {
+    public Task createTask(@Valid @RequestBody Task task) {
         return service.addTask(task);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable int id, @RequestBody Task updatedTask) {
+    public ResponseEntity<Task> updateTask(@PathVariable int id, @Valid @RequestBody Task updatedTask) {
         Task task = service.getTaskById(id);
         if (task == null) {
             return ResponseEntity.notFound().build(); // Return 404 if task doesn't exist
