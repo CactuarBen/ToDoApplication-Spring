@@ -17,15 +17,7 @@ public class TaskService {
         return repository.findAll();
     }
 
-    public Task getTaskById(int id) {
-        return repository.findById((long) id).orElse(null);
-    }
-
     public Task addTask(Task task) {
-        return repository.save(task);
-    }
-
-    public Task updateTask(Task task) {
         return repository.save(task);
     }
 
@@ -33,4 +25,3 @@ public class TaskService {
         repository.deleteById(id);
     }
 }
-

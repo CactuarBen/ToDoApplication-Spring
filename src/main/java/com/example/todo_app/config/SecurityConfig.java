@@ -11,13 +11,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF for API calls
+                .csrf(csrf -> csrf.disable()) // Disable CSRF for testing (Enable in production)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll() // Allow Swagger UI access
-                        .requestMatchers("/tasks/**").authenticated() // Require authentication for API
-                        .anyRequest().authenticated()
+                        .requestMatchers("/tasks/**").permitAll() // Allow all access to /tasks endpoints
+                        .anyRequest().authenticated() // Require authentication for other endpoints
                 )
-                .httpBasic(); // Use Basic Authentication
+                .httpBasic(); // Enable basic authentication
 
         return http.build();
     }
